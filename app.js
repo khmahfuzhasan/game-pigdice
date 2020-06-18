@@ -9,9 +9,9 @@ GAME RULES:
 
 */
 
-let scores, randomScore, activePlayer;
+let scores, roundScore, activePlayer;
 scores 		= [0,0];
-randomScore = 0;
+roundScore = 0;
 activePlayer= 0;
 
 
@@ -25,11 +25,25 @@ document.getElementById('current-1').textContent=0;
 document.querySelector('.btn-roll').addEventListener('click',()=>{
 	//1. Random number of dice
 	let dice 		= Math.floor(Math.random()*6)+1;
+	console.log(dice);
 
 	//display the dice number/result
 	let diceDOM = document.querySelector('.dice');
 	diceDOM.style.display='block';
 	diceDOM.src = `assets/images/dice-${dice}.png`;
-
 	//3. update the result when only the result/ rolled number was not 1
+	if(dice !==1){
+		//count roundScore
+		roundScore +=dice;
+		document.getElementById('current-'+activePlayer).textContent=roundScore;
+	}else{
+		//change to next player
+		roundScore=0;
+		document.getElementById('current-'+activePlayer).textContent=roundScore;
+		activePlayer ===0 ? activePlayer= 1: activePlayer= 0;
+		diceDOM.src = `assets/images/next-player.png`;
+		document.querySelector('.player-0-panel').classList.toggle('active');
+		document.querySelector('.player-1-panel').classList.toggle('active');
+
+	}
 });
