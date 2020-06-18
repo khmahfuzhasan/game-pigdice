@@ -29,7 +29,7 @@ document.querySelector('.btn-roll').addEventListener('click',()=>{
 	//display the dice number/result
 	let diceDOM = document.querySelector('.dice');
 	diceDOM.style.display='block';
-	diceDOM.src = `dice-${dice}.png`;
+	diceDOM.src = `assets/images/dice-${dice}.png`;
 
 	//3. update the result when only the result/ rolled number was not 1
 });
