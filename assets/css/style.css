@@ -186,3 +186,58 @@ i {
  
 }
 .dice{border: 3px solid rgba(111, 206, 112, 0.74);border-radius: 32px;}
+
+.dice.spinning{
+    transform: scale(2);
+    left: 45%;
+    border-radius: 50%;
+    border-color:#EB4D4D;
+    animation: diceSpin 1s infinite;
+}
+
+@keyframes diceSpin{
+   from{transform:rotateZ(0deg) scale(1.2);}
+    to{transform:rotate(720deg) scale(1);}
+ 
+}
+
+/*.player-1-panel::before {
+    content: '';
+    display: block;
+    width: 0%;
+    border-bottom: 10px solid #43dd5b;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+.player-1-panel::after {
+    content: '';
+    display: block;
+    width: 100%;
+    border-bottom: 10px solid #8080803d;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+}
+.player-0-panel::before {
+    content: '';
+    display: block;
+    width: 0%;
+    border-bottom: 10px solid #43dd5b;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+.player-0-panel::after {
+    content: '';
+    display: block;
+    width: 100%;
+    border-bottom: 10px solid #8080803d;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+}*/

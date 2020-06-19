@@ -9,20 +9,29 @@ let btnNewDOM 	= document.querySelector('.btn-new');
 btnRollDOM.addEventListener('click',()=>{
 
 	if(gamePlaying){
+
 			btnHoldDOM.removeAttribute('disabled');
 			btnHoldDOM.style.opacity=1;
 			//1. Random number of dice
-			let dice 		= Math.floor(Math.random()*6)+1;;
+			let dice 		= Math.floor(Math.random()*6)+1;
 			//let dice 		= 6;
-			
+
+			//spinning dice
+			spinningDice();
+
 			//display the dice number/result
-			diceDOM.style.display='block';
-			diceDOM.src = `assets/images/dice-${dice}.png`;
+			setTimeout(()=>{
+				diceDOM.style.display='block';
+				diceDOM.src = `assets/images/dice-${dice}.png`;
+				diceDOM.classList.remove('spinning');
+			},500);
+
 			//3. update the result when only the result/ rolled number was not 1
 			if(dice !==1){
 				
 				//check same Dice
 				if(dice !==sameDice){
+
 					//count roundScore
 					roundScore +=dice;
 					document.getElementById('current-'+activePlayer).textContent=roundScore;
@@ -49,7 +58,7 @@ btnRollDOM.addEventListener('click',()=>{
 				nextPlayer();
 
 			}
-			console.log(dice, sameDice,diceCount);
+			//console.log(dice, sameDice,diceCount);
 	}// close gamePlaying
 });
 
@@ -118,12 +127,35 @@ function nextPlayer(){
 	roundScore=0;
 	document.getElementById('current-'+activePlayer).textContent=roundScore;
 	activePlayer ===0 ? activePlayer= 1: activePlayer= 0;
-	diceDOM.src = `assets/images/next-player.png`;
 	document.querySelector('.player-0-panel').classList.toggle('active');
 	document.querySelector('.player-1-panel').classList.toggle('active');
+	btnRollDOM.setAttribute('disabled','disabled');
+	btnRollDOM.style.opacity=0.5;
 	btnHoldDOM.setAttribute('disabled', 'disabled');
+	diceDOM.src = `assets/images/next-player.png`;
+	setTimeout(()=>{
+		diceDOM.src = `assets/images/next-player.png`;
+	},600);
+	setTimeout(()=>{
+		btnRollDOM.removeAttribute('disabled', 'disabled');
+		btnRollDOM.style.opacity=1;
+	},1000);
 	btnHoldDOM.style.opacity=0.5;
 	diceCount = 0;
+}
+
+// spinning dice
+
+function spinningDice(){
+	diceDOM.classList.add('spinning');
+	let dice 		= Math.floor(Math.random()*5)+2;
+	//console.log(`spin key= ${dice}`);
+	for(let i =1;i<=6;i++){
+		setTimeout(()=>{
+			diceDOM.style.display='block';
+			diceDOM.src = `assets/images/dice-${dice}.png`;
+		},100);
+	}
 }
 
 //initialize the application
@@ -138,6 +170,8 @@ function init(){
 	document.getElementById('score-1').textContent 	=0;
 	document.getElementById('current-0').textContent=0;
 	document.getElementById('current-1').textContent=0;
-	document.getElementById('update-'+activePlayer).textContent = "";
-	document.getElementById('name-'+activePlayer).classList.remove('activePoint');
+	document.getElementById('update-0').textContent = "";
+	document.getElementById('update-1').textContent = "";
+	document.getElementById('name-0').classList.remove('activePoint');
+	document.getElementById('name-1').classList.remove('activePoint');
 }
