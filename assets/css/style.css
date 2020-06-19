@@ -241,3 +241,94 @@ i {
     left: 0;
     z-index: 99;
 }*/
+.btn-settings{
+    width:30px;
+    height:30px;
+    position: absolute;
+    right:0;
+    top:10px;
+    left: initial!important;
+    cursor:pointer;
+    z-index: 9999;
+    border-radius: 50%;
+    z-index: 9999999;
+
+
+}
+.btn-settings.popover{
+    background:#d6ffd6;
+}
+.btn-settings:hover img{
+    opacity: .8;
+    background:#d6ffd6;
+    border-radius: 50%;
+}
+.btn-settings img{
+    width:30px;
+    cursor:pointer;
+
+}
+
+.setting-inputs{
+    position: absolute;
+    width:300px;
+    height:370px;
+    background:#d6ffd6;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    z-index: 99999;
+    box-shadow: 0 0 8px #778279;
+    display: none;
+    padding-top:20px;
+}
+.blurEffect{
+    position: absolute;
+    width:100%;
+    height:auto;
+    background:#0000002b;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    z-index: 9999;
+    display: none;
+}
+
+.game-settings .popup{
+    display:block;
+}
+
+.setting-inputs input{
+    display: block;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+
+}
+.setting-inputs label{
+    padding-left: 15px;
+}
+#settingUpdate {
+    cursor: pointer;
+    background: #38b84c;
+    color: #fff;
+    border: 1px solid #38b84c;
+    margin-top: 30px;
+}
+#settingUpdate:hover{
+    opacity: .8;
+}
+.gamespoints{
+    position: absolute;
+    top: 0;
+    color: #384139;
+    z-index: 9999;
+    padding: 10px;
+}

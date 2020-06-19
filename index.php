@@ -1,3 +1,35 @@
+<?php 
+
+session_start();
+//session_destroy();
+// Player one
+if(isset($_SESSION['player_one'])){
+    $Player_one = $_SESSION['player_one'];
+}else{
+    $Player_one = "Player 1";
+}
+
+// Player two
+if(isset($_SESSION['player_two'])){
+    $Player_two = $_SESSION['player_two'];
+}else{
+    $Player_two = "Player 2";
+}
+
+// Ponts
+if(isset($_SESSION['points'])){
+    $points = $_SESSION['points'];
+}else{
+    $points = 100;
+}
+
+
+
+
+ ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,20 +48,37 @@
         <audio id="lostPoint" src="assets/audio/initialize.mp3"></audio>
         <audio id="winner" src="assets/audio/initialize.mp3"></audio>
         <div class="wrapper clearfix">
+            <div class="gamespoints"><strong>Game Over:</strong> <?php echo $points ?></div>
+            <div class="game-settings"> 
+                <button class="btn-settings"><img src="assets/images/settings-outline.svg" alt=""></button>
+                <div class="blurEffect"></div>
+                <div class="setting-inputs">
+                    <form>
+                        <label for="firstPlayer">Player 1</label>
+                        <input id="firstPlayer" type="text" value="<?php echo $Player_one; ?>">
+                        <label for="secondPlayer">Player 2</label>
+                        <input id="secondPlayer" type="text" value="<?php echo $Player_two; ?>">
+                        <label for="gameScores">Game Points</label>
+                        <input id="gameScores" type="number" value="<?php echo $points; ?>" min='50' title="Minimum Points 50">
+                        <input id="settingUpdate" type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
             <div class="player-0-panel active">
                 <div class="winner-update" id="update-0"></div>
-                <div class="player-name" id="name-0">Player 1</div>
-                <div class="player-score" id="score-0">43</div>
+                <div class="player-name" id="name-0"><?php echo $Player_one; ?></div>
+                <div class="player-score" id="score-0">0</div>
                 <div class="player-current-box">
                     <div class="player-current-label">Current</div>
-                    <div class="player-current-score" id="current-0">11</div>
+                    <div class="player-current-score" id="current-0">0</div>
                 </div>
             </div>
             
             <div class="player-1-panel">
                 <div class="winner-update" id="update-1"></div>
-                <div class="player-name" id="name-1">Player 2</div>
-                <div class="player-score" id="score-1">72</div>
+                <div class="player-name" id="name-1"><?php echo $Player_two; ?></div>
+                <div class="player-score" id="score-1">0</div>
                 <div class="player-current-box">
                     <div class="player-current-label">Current</div>
                     <div class="player-current-score" id="current-1">0</div>
@@ -43,6 +92,7 @@
             <img src="assets/images/new-game.png" alt="Dice" class="dice">
         </div>
         
+        <script src="assets/js/jquery.min.js"></script>
         <script src="app.js"></script>
     </body>
 </html>

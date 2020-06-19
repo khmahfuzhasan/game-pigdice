@@ -1,10 +1,16 @@
-let score, roundScore, activePlayer,sameDice,diceCount,gamePlaying;
+let score, roundScore, activePlayer,sameDice,diceCount,gamePlaying,setPoints;
 
 
 let diceDOM 	= document.querySelector('.dice');
 let btnRollDOM 	= document.querySelector('.btn-roll');
 let btnHoldDOM 	= document.querySelector('.btn-hold');
 let btnNewDOM 	= document.querySelector('.btn-new');
+
+//settings info
+let btnSettings	= document.querySelector('.btn-settings');
+let settingUpdate= document.querySelector('#settingUpdate');
+let gameScores= document.querySelector('#gameScores');
+    setPoints = gameScores.value.trim();
 
 //Audio Select
 
@@ -122,7 +128,7 @@ btnHoldDOM.addEventListener('click',()=>{
 
 
 			//3. check if the player won the game
-			if(score[activePlayer] >=10){
+			if(score[activePlayer] >=setPoints){
 				winnerDice();
 				diceDOM.setAttribute('src','assets/images/end-game.png');
 				diceDOM.style.border 	= '3px solid rgba(111, 206, 112, 0.74)';
@@ -226,4 +232,40 @@ function init(){
 	document.getElementById('update-1').textContent = "";
 	document.getElementById('name-0').classList.remove('activePoint');
 	document.getElementById('name-1').classList.remove('activePoint');
-} 
+}
+
+
+btnSettings.addEventListener('click',()=>{
+	let blurEffect 		= document.querySelector('.blurEffect');
+	let settingInputs 	= document.querySelector('.setting-inputs');
+	blurEffect.classList.toggle('popup');
+	settingInputs.classList.toggle('popup');
+	btnSettings.classList.toggle('popover');
+});
+
+
+settingUpdate.addEventListener('click',(event)=>{
+	event.preventDefault();
+	let firstPlayer	= document.querySelector('#firstPlayer').value.trim();
+	let secondPlayer= document.querySelector('#secondPlayer').value.trim();
+	let gamePoints	= gameScores.value.trim();
+	let player0	= document.querySelector('#name-0');
+	let player1	= document.querySelector('#name-1');
+	let updateGamePoints	= document.querySelector('.gamespoints');
+
+		jQuery.ajax({
+		url: 'game-sessions.php',
+		type:'POST',
+		data:{'firstPlayer':firstPlayer,'secondPlayer':secondPlayer,'gameScores':gamePoints},
+		success:(response)=>{
+			const res = JSON.parse(response);
+			if(res.status){
+				player0.textContent = res.player_one;
+				player1.textContent = res.player_two;
+				setPoints  = gameScores.value = res.points;
+				updateGamePoints.innerHTML = `<strong>Game Over:</strong> ${res.points}`;
+			}
+		}
+	});
+});
+
