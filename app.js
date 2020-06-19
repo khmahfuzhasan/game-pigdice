@@ -5,11 +5,15 @@ let diceDOM 	= document.querySelector('.dice');
 let btnRollDOM 	= document.querySelector('.btn-roll');
 let btnHoldDOM 	= document.querySelector('.btn-hold');
 let btnNewDOM 	= document.querySelector('.btn-new');
-
+let blurEffect 		= document.querySelector('.blurEffect');
+let settingInputs 	= document.querySelector('.setting-inputs');
 //settings info
+let firstPlayer	= document.querySelector('#firstPlayer');
+let secondPlayer= document.querySelector('#secondPlayer');
 let btnSettings	= document.querySelector('.btn-settings');
 let settingUpdate= document.querySelector('#settingUpdate');
 let gameScores= document.querySelector('#gameScores');
+let addBallons= document.querySelector('.add-ballons');
     setPoints = gameScores.value.trim();
 
 //Audio Select
@@ -43,7 +47,7 @@ function lostPointDice(){
 	lostPoint.play();
 }
 function winnerDice(){
-	winner.src='assets/audio/winner.mp3';
+	winner.src='assets/audio/winner-2.mp3';
 	setTimeout(()=>{
 		winner.play();
 	},150);
@@ -138,6 +142,7 @@ btnHoldDOM.addEventListener('click',()=>{
 				btnHoldDOM.style.opacity=0.5;
 				document.getElementById('name-'+activePlayer).classList.add('activePoint');
 				document.getElementById('update-'+activePlayer).textContent = "Winner!";
+				winnerBallons();
 				gamePlaying = false;
 			}else{
 				//4. change player
@@ -151,7 +156,9 @@ btnHoldDOM.addEventListener('click',()=>{
 });
 
 //Event Listener for btn-new
-btnNewDOM.addEventListener('click',()=>{
+btnNewDOM.addEventListener('click',newGameStart);
+
+function newGameStart(){
 	init();
 	if(gamePlaying){
 		startGameDice();
@@ -174,8 +181,7 @@ btnNewDOM.addEventListener('click',()=>{
 		document.querySelector('.player-1-panel').classList.remove('active');
 
 	}// close gamePlaying
-});
-
+}
 
 // Next Player function
 
@@ -215,9 +221,101 @@ function spinningDice(){
 	}
 }
 
+
+
+
+// settings popup
+btnSettings.addEventListener('click',settingspoUp);
+function settingspoUp(){
+	blurEffect.classList.toggle('popup');
+	settingInputs.classList.toggle('popup');
+	btnSettings.classList.toggle('popover');	
+}
+
+settingUpdate.addEventListener('click',(event)=>{
+	event.preventDefault();
+	let valueOfFirst 	= firstPlayer.value.trim();
+	let valueOfSecond 	= secondPlayer.value.trim();
+	let valueOfPoints 	= gameScores.value.trim();
+	let player0	= document.querySelector('#name-0');
+	let player1	= document.querySelector('#name-1');
+	let updateGamePoints	= document.querySelector('.gamespoints');
+
+		jQuery.ajax({
+		url: 'game-sessions.php',
+		type:'POST',
+		data:{'firstPlayer':valueOfFirst,'secondPlayer':valueOfSecond,'gameScores':valueOfPoints},
+		success:(response)=>{
+			const res = JSON.parse(response);
+			if(res.status){
+				player0.textContent = firstPlayer.value = res.player_one;
+				player1.textContent = secondPlayer.value = res.player_two;
+				setPoints  = gameScores.value = res.points;
+				updateGamePoints.innerHTML = `<strong>Game Over:</strong> ${res.points}`;
+				if(!res.isEmpty && !res.isFirstEmpty && !res.isSecondEmpty && !res.isSecondLess){
+					settingspoUp();
+					newGameStart();
+				}else if(res.isFirstEmpty){
+					borderWarn(firstPlayer,'red');
+					borderWarn(secondPlayer,'#000');
+					borderWarn(gameScores,'#000');
+				}else if(res.isSecondEmpty){
+					borderWarn(firstPlayer,'#000');
+					borderWarn(secondPlayer,'red');
+					borderWarn(gameScores,'#000');
+
+				}else if(res.settingspoUp){
+					borderWarn(firstPlayer,'#000');
+					borderWarn(secondPlayer,'#000');
+					borderWarn(gameScores,'red');				
+				}else{
+					borderWarn(firstPlayer,'#000');
+					borderWarn(secondPlayer,'#000');
+					borderWarn(gameScores,'red');
+				}
+				//console.log(res);
+			}
+		}
+	});
+});
+
+// Alert Messages
+function borderWarn(inpput,color){
+	inpput.style.border=`1px solid ${color}`;
+}
+
+// create ballons
+function createNewBallons(number,size){
+	let currentPosition = {
+		x: Math.floor(Math.random()* innerWidth),
+		y: Math.floor(Math.random()*innerHeight)
+	}
+	let x ="";
+	for(let i=0;i<number;i++ ){
+	let fromLeft 		= Math.floor(Math.random()* 1000)+1;
+	let imageNum		= Math.floor(Math.random()*3)+1;
+	let animSpeed		= Math.random()*3+1;
+	let imagesize		= Math.floor(Math.random()*size)+1;
+		x += `<img class="winnerBallons" style="width:${imagesize}px;left:${fromLeft}px;animation: fallDown ${animSpeed}s infinite;" src="assets/images/ballon-${imageNum}.png">`;
+	}
+	 return x;
+}
+
+// winnerBallon poup
+let countEnd = 0;
+function winnerBallons(){
+	if(gamePlaying){
+		addBallons.innerHTML = createNewBallons(100,200);
+		setTimeout(()=>{
+			addBallons.innerHTML = "";
+		},19000);	
+	}
+}
+//winnerBallons();;
 //initialize the application
 function init(){
 	initAudio();
+	addBallons.innerHTML = "";
 	gamePlaying		= true;
 	score 			= [0,0];
 	roundScore 		= 0;
@@ -234,38 +332,4 @@ function init(){
 	document.getElementById('name-1').classList.remove('activePoint');
 }
 
-
-btnSettings.addEventListener('click',()=>{
-	let blurEffect 		= document.querySelector('.blurEffect');
-	let settingInputs 	= document.querySelector('.setting-inputs');
-	blurEffect.classList.toggle('popup');
-	settingInputs.classList.toggle('popup');
-	btnSettings.classList.toggle('popover');
-});
-
-
-settingUpdate.addEventListener('click',(event)=>{
-	event.preventDefault();
-	let firstPlayer	= document.querySelector('#firstPlayer').value.trim();
-	let secondPlayer= document.querySelector('#secondPlayer').value.trim();
-	let gamePoints	= gameScores.value.trim();
-	let player0	= document.querySelector('#name-0');
-	let player1	= document.querySelector('#name-1');
-	let updateGamePoints	= document.querySelector('.gamespoints');
-
-		jQuery.ajax({
-		url: 'game-sessions.php',
-		type:'POST',
-		data:{'firstPlayer':firstPlayer,'secondPlayer':secondPlayer,'gameScores':gamePoints},
-		success:(response)=>{
-			const res = JSON.parse(response);
-			if(res.status){
-				player0.textContent = res.player_one;
-				player1.textContent = res.player_two;
-				setPoints  = gameScores.value = res.points;
-				updateGamePoints.innerHTML = `<strong>Game Over:</strong> ${res.points}`;
-			}
-		}
-	});
-});
 

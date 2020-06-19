@@ -42,12 +42,14 @@ if(isset($_SESSION['points'])){
     </head>
 
     <body>
+
         <audio id="startGame" src="assets/audio/initialize.mp3"></audio>
         <audio id="rollDice" src="assets/audio/initialize.mp3"></audio>
         <audio id="globalPoint" src="assets/audio/initialize.mp3"></audio>
         <audio id="lostPoint" src="assets/audio/initialize.mp3"></audio>
         <audio id="winner" src="assets/audio/initialize.mp3"></audio>
         <div class="wrapper clearfix">
+            <div class="add-ballons"></div>
             <div class="gamespoints"><strong>Game Over:</strong> <?php echo $points ?></div>
             <div class="game-settings"> 
                 <button class="btn-settings"><img src="assets/images/settings-outline.svg" alt=""></button>

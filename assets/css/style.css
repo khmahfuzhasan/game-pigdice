@@ -181,7 +181,7 @@ i {
     0%{transform:   scale(1);}
     10%{transform:  scale(2); opacity: 1;}
     40%{transform:  scale(1); opacity: 1;}
-    80%{transform:  scale(10); opacity: .4;}
+    80%{transform:  scale(10); opacity: .4;border-radius:0;border-color:transparent;}
     100%{transform: scale(0);opacity: 0;}
  
 }
@@ -310,6 +310,7 @@ i {
     margin-bottom: 10px;
     margin-top: 5px;
     font-size: 18px;
+    border:1px solid #000;
 
 }
 .setting-inputs label{
@@ -331,4 +332,26 @@ i {
     color: #384139;
     z-index: 9999;
     padding: 10px;
+}
+
+.winnerBallons{
+    position: absolute!important;
+    width: 200px;
+    overflow: hidden;
+    z-index: 9999999;
+}
+@keyframes fallDown{
+  0% { transform: translate(1px, 1px) rotate(0deg); bottom:-300px;}
+  20% { transform: translate(-3px, 0px) rotate(10deg); }
+  50% { transform: translate(-1px, 2px) rotate(-10deg); }
+  80% { transform: translate(-1px, -1px) rotate(10deg); }
+  100% { transform: translate(1px, -2px) rotate(-10deg);bottom:100%;}
+        
+
+        
+
+}
+.add-ballons{
+    width:100%;
+    height:100px;
 }
