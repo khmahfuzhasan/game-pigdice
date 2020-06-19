@@ -3,34 +3,27 @@ GAME RULES:
 
 - The game has 2 players, playing in rounds
 - In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
-- BUT, if the player rolls a 1 or same rolls same number again then all his ROUND score gets lost. After that, it's the next player's turn
+- BUT, if the player rolls a 1 or same rolled number three times then all his ROUND score gets lost. After that, it's the next player's turn
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
 
-let score, roundScore, activePlayer,sameDice;
-score 		= [0,0];
-roundScore 	= activePlayer = sameDice = 0;
+let score, roundScore, activePlayer,sameDice,diceCount;
+init();
 
-
-
-
-document.getElementById('score-0').textContent=0;
-document.getElementById('score-1').textContent=0;
-document.getElementById('current-0').textContent=0;
-document.getElementById('current-1').textContent=0;
 let diceDOM 	= document.querySelector('.dice');
 let btnRollDOM 	= document.querySelector('.btn-roll');
 let btnHoldDOM 	= document.querySelector('.btn-hold');
-
+let btnNewDOM 	= document.querySelector('.btn-new');
 //Event handler for btn-roll
 btnRollDOM.addEventListener('click',()=>{
 	btnHoldDOM.removeAttribute('disabled');
 	btnHoldDOM.style.opacity=1;
 	//1. Random number of dice
-	let dice 		= Math.floor(Math.random()*6)+1;
-	console.log(dice, sameDice);
+	let dice 		= Math.floor(Math.random()*6)+1;;
+	//let dice 		= 6;
+	
 	//display the dice number/result
 	diceDOM.style.display='block';
 	diceDOM.src = `assets/images/dice-${dice}.png`;
@@ -43,10 +36,21 @@ btnRollDOM.addEventListener('click',()=>{
 			roundScore +=dice;
 			document.getElementById('current-'+activePlayer).textContent=roundScore;
 			sameDice=dice;
+			diceCount=1;
 
 		}else{
-			//change to next player
-			nextPlayer();
+			diceCount++;
+			if(diceCount !==3){
+				//count roundScore
+				roundScore +=dice;
+				document.getElementById('current-'+activePlayer).textContent=roundScore;
+				sameDice=dice;
+
+			}else{
+				console.log("same three");
+				//change to next player
+				nextPlayer();
+			}
 		}
 
 	}else{
@@ -54,6 +58,7 @@ btnRollDOM.addEventListener('click',()=>{
 		nextPlayer();
 
 	}
+	console.log(dice, sameDice,diceCount);
 });
 
 // add another Event Listener for btn-hold
@@ -66,9 +71,9 @@ btnHoldDOM.addEventListener('click',()=>{
 
 
 	//3. check if the player won the game
-	if(score[activePlayer] >=100){
+	if(score[activePlayer] >=10){
 		diceDOM.setAttribute('src','assets/images/end-game.png');
-		diceDOM.style.border= '3px solid rgba(111, 206, 112, 0.74)';
+		diceDOM.style.border 	= '3px solid rgba(111, 206, 112, 0.74)';
 		btnRollDOM.setAttribute('disabled', 'disabled');
 		btnRollDOM.style.opacity=0.5;
 		btnHoldDOM.setAttribute('disabled', 'disabled');
@@ -83,7 +88,27 @@ btnHoldDOM.addEventListener('click',()=>{
 
 });
 
-
+//Event Listener for btn-new
+btnNewDOM.addEventListener('click',()=>{
+	init();
+	diceDOM.style.display 	='block';
+	diceDOM.classList.add('animation');
+	btnRollDOM.setAttribute('disabled','disabled');
+	btnRollDOM.style.opacity=0.5;
+	btnHoldDOM.setAttribute('disabled', 'disabled');
+	btnHoldDOM.style.opacity=0.5;
+	diceDOM.setAttribute('src','assets/images/start-game.png');
+	setTimeout(()=>{
+		diceDOM.style.display 	='none';
+		diceDOM.classList.remove('animation');
+		btnRollDOM.removeAttribute('disabled','disabled');
+		btnRollDOM.style.opacity=1;
+		btnHoldDOM.removeAttribute('disabled', 'disabled');
+		btnHoldDOM.style.opacity=1;
+	},1500);
+	document.querySelector('.player-0-panel').classList.add('active');
+	document.querySelector('.player-1-panel').classList.remove('active');
+});
 
 
 // Next Player function
@@ -97,4 +122,20 @@ function nextPlayer(){
 	document.querySelector('.player-1-panel').classList.toggle('active');
 	btnHoldDOM.setAttribute('disabled', 'disabled');
 	btnHoldDOM.style.opacity=0.5;
+	diceCount = 0;
+}
+
+//initialize the application
+function init(){
+	score 			= [0,0];
+	roundScore 		= 0;
+	activePlayer 	= 0;
+	sameDice 		= 0;
+	diceCount 		=1;
+	document.getElementById('score-0').textContent 	=0;
+	document.getElementById('score-1').textContent 	=0;
+	document.getElementById('current-0').textContent=0;
+	document.getElementById('current-1').textContent=0;
+	document.getElementById('update-'+activePlayer).textContent = "";
+	document.getElementById('name-'+activePlayer).classList.remove('activePoint');
 }
