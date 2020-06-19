@@ -10,6 +10,11 @@
     </head>
 
     <body>
+        <audio id="startGame" src="assets/audio/initialize.mp3"></audio>
+        <audio id="rollDice" src="assets/audio/initialize.mp3"></audio>
+        <audio id="globalPoint" src="assets/audio/initialize.mp3"></audio>
+        <audio id="lostPoint" src="assets/audio/initialize.mp3"></audio>
+        <audio id="winner" src="assets/audio/initialize.mp3"></audio>
         <div class="wrapper clearfix">
             <div class="player-0-panel active">
                 <div class="winner-update" id="update-0"></div>
