@@ -91,6 +91,7 @@ btnRollDOM.addEventListener('click',()=>{
 					document.getElementById('current-'+activePlayer).textContent=roundScore;
 					sameDice=dice;
 					diceCount=1;
+					rollDiceEmoji();
 
 				}else{
 					diceCount++;
@@ -99,12 +100,13 @@ btnRollDOM.addEventListener('click',()=>{
 						roundScore +=dice;
 						document.getElementById('current-'+activePlayer).textContent=roundScore;
 						sameDice=dice;
-
+						rollDiceEmoji();
 					}else{
 						//console.log("same three");
 						//change to next player
 						nextPlayer();
 						lostPointDice();
+						rollDiceFailedmoji();
 					}
 				}
 
@@ -112,7 +114,7 @@ btnRollDOM.addEventListener('click',()=>{
 				//change to next player
 				nextPlayer();
 				lostPointDice();
-
+				rollDiceFailedmoji();
 			}
 			//console.log(dice, sameDice,diceCount);
 	}// close gamePlaying
@@ -122,6 +124,8 @@ btnRollDOM.addEventListener('click',()=>{
 btnHoldDOM.addEventListener('click',()=>{
 
 	if(gamePlaying){
+			//removeEmoji
+			addBallons.innerHTML = "";
 			//add audio
 			globalPointDice();
 			//1. add current current Score to Global Score
@@ -129,7 +133,6 @@ btnHoldDOM.addEventListener('click',()=>{
 			document.getElementById('score-'+activePlayer).textContent = score[activePlayer];
 
 			//2. Update UI
-
 
 			//3. check if the player won the game
 			if(score[activePlayer] >=setPoints){
@@ -186,7 +189,6 @@ function newGameStart(){
 // Next Player function
 
 function nextPlayer(){
-	
 	roundScore=0;
 	document.getElementById('current-'+activePlayer).textContent=roundScore;
 	activePlayer ===0 ? activePlayer= 1: activePlayer= 0;
@@ -286,10 +288,6 @@ function borderWarn(inpput,color){
 
 // create ballons
 function createNewBallons(number,size){
-	let currentPosition = {
-		x: Math.floor(Math.random()* innerWidth),
-		y: Math.floor(Math.random()*innerHeight)
-	}
 	let x ="";
 	for(let i=0;i<number;i++ ){
 	let fromLeft 		= Math.floor(Math.random()* 1000)+1;
@@ -302,7 +300,6 @@ function createNewBallons(number,size){
 }
 
 // winnerBallon poup
-let countEnd = 0;
 function winnerBallons(){
 	if(gamePlaying){
 		addBallons.innerHTML = createNewBallons(100,200);
@@ -311,7 +308,46 @@ function winnerBallons(){
 		},19000);	
 	}
 }
-//winnerBallons();;
+//winnerBallons();
+
+
+// create New Emoji
+function createNewEmoji(title,number,size){
+	let x ="";
+	for(let i=0;i<number;i++ ){
+	let fromLeft 		= Math.floor(Math.random()* 900)+1;
+	let imageNum		= Math.floor(Math.random()*5)+1;
+	let animSpeed		= 1.2;
+		x += `<img class="winnerBallons" style="width:${size}px;left:${fromLeft}px;animation: rollUpDown ${animSpeed}s infinite;" src="assets/images/${title}-${imageNum}.png">`;
+	}
+	 return x;
+}
+
+
+// roll Dice Emoji
+function rollDiceEmoji(){
+	if(gamePlaying){
+		addBallons.innerHTML = createNewEmoji('roll',1,100);
+		if(score[0] < setPoints || score[1] < setPoints ){
+			setTimeout(()=>{
+				addBallons.innerHTML = "";
+			},1200);	
+		}
+	}
+}
+//rollDiceEmoji();
+// roll Dice Emoji when failed
+function rollDiceFailedmoji(){
+	if(gamePlaying){
+		addBallons.innerHTML = createNewEmoji('failed',1,100);
+		if(score[0] < setPoints || score[1] < setPoints ){
+			setTimeout(()=>{
+				addBallons.innerHTML = "";
+			},1200);	
+		}
+	}
+}
+
 //initialize the application
 function init(){
 	initAudio();
