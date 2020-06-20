@@ -10,6 +10,7 @@ if(isset($_POST['active'])){
 			return $pdo;
 		}catch(PDOException $e) {echo "Connection failed: " . $e->getMessage();}
 	}
+
 	if(!isset($_SESSION['isReact'])){
 			$sql  = "INSERT INTO reaction(react) VALUES('loved');";
 			$stmt = connect()->prepare($sql);
@@ -20,29 +21,17 @@ if(isset($_POST['active'])){
 				$totalRow = $stmt->rowCount();
 				if($totalRow>0){
 					$_SESSION['isReact'] = true;
-					$_SESSION['totalReacts'] = $totalRow;
-					echo json_encode(["status"=>true,'data'=>$totalRow, "message"=> "fetch and added data successfully!"]);
+					echo json_encode(["status"=>true, "message"=> "value grater then 0 successfully!"]);
 				}else{
-					$_SESSION['isReact'] = true;
-					$_SESSION['totalReacts'] = 0;
-					echo json_encode(["status"=>true,'data'=>$totalRow, "message"=> "fetch and added data successfully!"]);	
-				}
-			}	
+						$_SESSION['isReact'] = true;
+						echo json_encode(["status"=>true,"message"=> "from when only value 0 successfully!"]);	
+				}	
+			}
 	}else{
-		$sql  = "SELECT react from reaction WHERE react='loved';";
-		$stmt = connect()->prepare($sql);
-		$stmt->execute();
-		$totalRow = $stmt->rowCount();
-		if($totalRow>0){
-			$_SESSION['isReact'] = true;
-			$_SESSION['totalReacts'] = $totalRow;
-			echo json_encode(["status"=>true,'data'=>$totalRow, "message"=> "fetch data successfully!"]);
-		}else{
-			$_SESSION['isReact'] = true;
-			$_SESSION['totalReacts'] = 0;
-			echo json_encode(["status"=>true,'data'=>$totalRow, "message"=> "fetch data successfully!"]);	
-		}
+		echo json_encode(["status"=>false, "message"=> "its fetch and added data successfully!"]);
 	}
+	
+
 	
 }else{
 	header('location: http://localhost/learnjs/pigdice/');

@@ -15,12 +15,22 @@ if(isset($_POST['active'])){
 		$stmt->execute();
 		$totalRow = $stmt->rowCount();
 		if($totalRow>0){
-
-			$_SESSION['totalReacts'] = $totalRow;
-			echo json_encode(["status"=>true, "message"=> "get data successfully"]);
+			if(isset($_SESSION['isReact'])){
+				if($_SESSION['isReact']){
+					echo json_encode(["status"=>true,'data'=>$totalRow,'session'=>true, "message"=> "get data successfully"]);
+				}
+			}else{
+				echo json_encode(["status"=>true,'data'=>$totalRow,'session'=>false, "message"=> "get data successfully"]);
+			}
+			
 		}else{
-			$_SESSION['totalReacts'] = 0;
-			echo json_encode(["status"=>true, "message"=> "get data successfully"]);
+			if(isset($_SESSION['isReact'])){
+				if($_SESSION['isReact']){
+					echo json_encode(["status"=>true,'data'=>0,'session'=>true, "message"=> "get data successfully"]);
+				}
+			}else{
+				echo json_encode(["status"=>true,'data'=>0,'session'=>false, "message"=> "get data successfully"]);
+			}
 		}	
 	}
 		

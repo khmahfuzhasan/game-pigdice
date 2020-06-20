@@ -397,22 +397,31 @@ function getReact(){
 		},
 		success:(res)=>{
 			const response = JSON.parse(res);
-			if(response.status){	
+			if(response.status){
 				//console.log(response);
+				if(response.session){
+					if(response.reactCount<10){
+						countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
+					}else{
+						countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
+					}	
+				}else{
+					if(response.reactCount<10){
+						countReaction.innerHTML = `<img src="assets/images/love.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
+					}else{
+						countReaction.innerHTML = `<img src="assets/images/love.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
+					}					
+				}
 			}
 		}
 	});
 
 }
-	getReact();
+	
 
 
 // SET Reacts
-countReaction.addEventListener('click',()=>{
-	setInterval(()=>{
-			setReact();
-	},1000);
-});
+countReaction.addEventListener('click',setReact);
 
 // setReact
 function setReact(){
@@ -422,14 +431,10 @@ function setReact(){
 		data:{'active':true},
 		success:(res)=>{
 			const response = JSON.parse(res);
+			console.log(response);
 			if(response.status){
-				if(response.reactCount<10){
-					countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
-				}else{
-					countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
-				}
+				
 			}
-			//console.log(response);
 		}
 	});
 }
@@ -474,6 +479,10 @@ function UpdateGamePlayed(){
 		}
 	});
 }
+
+
+// Set Interval
 setInterval(()=>{
+	getReact();
 	UpdateGamePlayed();
 },500);
