@@ -7,6 +7,7 @@ let btnHoldDOM 	= document.querySelector('.btn-hold');
 let btnNewDOM 	= document.querySelector('.btn-new');
 let blurEffect 		= document.querySelector('.blurEffect');
 let settingInputs 	= document.querySelector('.setting-inputs');
+let countReaction 	= document.querySelector('.count-reaction');
 //settings info
 let firstPlayer	= document.querySelector('#firstPlayer');
 let secondPlayer= document.querySelector('#secondPlayer');
@@ -14,6 +15,7 @@ let btnSettings	= document.querySelector('.btn-settings');
 let settingUpdate= document.querySelector('#settingUpdate');
 let gameScores= document.querySelector('#gameScores');
 let addBallons= document.querySelector('.add-ballons');
+let countGame= document.querySelector('.count-game');
     setPoints = gameScores.value.trim();
 
 //Audio Select
@@ -22,6 +24,7 @@ let startGame = document.getElementById('startGame');
 let rollDice = document.getElementById('rollDice');
 let globalPoint = document.getElementById('globalPoint');
 let lostPoint = document.getElementById('lostPoint');
+let countGameAudio = document.getElementById('countGameAudio');
 let winner = document.getElementById('winner');
 
 // initalization game
@@ -46,18 +49,30 @@ function lostPointDice(){
 	lostPoint.src='assets/audio/lost-hand.mp3';
 	lostPoint.play();
 }
+
 function winnerDice(){
 	winner.src='assets/audio/winner-2.mp3';
 	setTimeout(()=>{
 		winner.play();
 	},150);
 }
+function countTotalGameAudio(){
+	countGameAudio.src='assets/audio/kiss-me-close-you.mp3';
+	countGameAudio.play();
+}
+
 function initAudio(){
 	rollDice.src='assets/audio/initialize.mp3';
 	globalPoint.src='assets/audio/initialize.mp3';
 	lostPoint.src='assets/audio/initialize.mp3';
+	countGameAudio.src='assets/audio/initialize.mp3';
 	winner.src='assets/audio/initialize.mp3';
 }
+//Event Listener Of Count Game
+countGame.addEventListener('click',()=>{
+	countTotalGameAudio();
+});
+
 
 //Event handler for btn-roll
 btnRollDOM.addEventListener('click',()=>{
@@ -146,6 +161,7 @@ btnHoldDOM.addEventListener('click',()=>{
 				document.getElementById('name-'+activePlayer).classList.add('activePoint');
 				document.getElementById('update-'+activePlayer).textContent = "Winner!";
 				winnerBallons();
+				countTotalPlayed();
 				gamePlaying = false;
 			}else{
 				//4. change player
@@ -369,3 +385,95 @@ function init(){
 }
 
 
+// Count  Reactions and Update
+
+// GET Reacts
+function getReact(){
+	jQuery.ajax({
+		url: 'get-react.php',
+		type: 'POST',
+		data:{
+			'active':true
+		},
+		success:(res)=>{
+			const response = JSON.parse(res);
+			if(response.status){	
+				//console.log(response);
+			}
+		}
+	});
+
+}
+	getReact();
+
+
+// SET Reacts
+countReaction.addEventListener('click',()=>{
+	setInterval(()=>{
+			setReact();
+	},1000);
+});
+
+// setReact
+function setReact(){
+	jQuery.ajax({
+		url: 'set-react.php',
+		type: 'POST',
+		data:{'active':true},
+		success:(res)=>{
+			const response = JSON.parse(res);
+			if(response.status){
+				if(response.reactCount<10){
+					countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
+				}else{
+					countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
+				}
+			}
+			//console.log(response);
+		}
+	});
+}
+
+
+// Count Total Played game
+function countTotalPlayed(){
+	player1 = firstPlayer.value.trim();
+	player2 = secondPlayer.value.trim();
+	pointsToltal = gameScores.value.trim();
+	jQuery.ajax({
+		url: 'set-total-game.php',
+		type: 'POST',
+		data:{
+			'active':true,
+			'player1':player1,
+			'player2':player2,
+			'pointsToltal':pointsToltal
+		},
+		success:(res)=>{
+			const response = JSON.parse(res);
+			if(response.status){
+				//console.log(response);
+			}
+		}
+	});
+}
+// Get Total Game Played Value
+function UpdateGamePlayed(){
+
+	jQuery.ajax({
+		url: 'get-total-game.php',
+		type: 'POST',
+		data:{
+			'active':true,
+		},
+		success:(res)=>{
+			const response = JSON.parse(res);
+			if(response.status){
+				countGame.innerHTML=`<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>Played!</span>`;
+			}
+		}
+	});
+}
+setInterval(()=>{
+	UpdateGamePlayed();
+},500);

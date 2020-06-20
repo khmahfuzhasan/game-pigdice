@@ -358,3 +358,61 @@ i {
     width:100%;
     height:100px;
 }
+
+.count-reaction{
+    display:block;
+    width:100px;
+    position: absolute;
+    right:20px;
+    top:20px;
+    z-index: 99999;
+    cursor: pointer;
+
+}
+.count-reaction:hover{
+    opacity: .9;
+}
+.count-reaction img{
+    width:100px;
+}
+.count-reaction .loved {
+    position: absolute;
+    right: 0px;
+    top: 22px;
+    left: 0;
+    font-size: 12px;
+    color: #ddd;
+    font-weight: bold;
+    text-shadow: 0 0px 3px #4a3232b5;
+    text-align: center;
+}
+
+
+/*Count game*/
+.count-game{
+    display:block;
+    width:100px;
+    position: absolute;
+    right:20px;
+    top:115px;
+    z-index: 99999;
+    cursor: pointer;
+
+}
+.count-game:hover{
+    opacity: .9;
+}
+.count-game img{
+    width:100px;
+}
+.count-game .loved {
+    position: absolute;
+    right: 0px;
+    top: 22px;
+    left: 0;
+    font-size: 12px;
+    color: #ddd;
+    font-weight: bold;
+    text-shadow: 0 0px 3px #4a3232b5;
+    text-align: center;
+}

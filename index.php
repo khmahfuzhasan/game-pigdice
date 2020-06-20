@@ -23,7 +23,17 @@ if(isset($_SESSION['points'])){
     $points = 100;
 }
 
-
+//Reacts
+if(isset($_SESSION['isReact'])){
+    $isReact = $_SESSION['isReact'];
+}else{
+    $isReact = false;
+}
+if(isset($_SESSION['totalReacts'])){
+    $totalReacts = $_SESSION['totalReacts'];
+}else{
+    $totalReacts = 0;
+}
 
 
  ?>
@@ -42,12 +52,29 @@ if(isset($_SESSION['points'])){
     </head>
 
     <body>
-
+        
         <audio id="startGame" src="assets/audio/initialize.mp3"></audio>
         <audio id="rollDice" src="assets/audio/initialize.mp3"></audio>
         <audio id="globalPoint" src="assets/audio/initialize.mp3"></audio>
         <audio id="lostPoint" src="assets/audio/initialize.mp3"></audio>
+        <audio id="countGameAudio" src="assets/audio/initialize.mp3"></audio>
         <audio id="winner" src="assets/audio/initialize.mp3"></audio>
+        <div class="count-reaction">
+            <?php if($isReact){
+                echo '<img src="assets/images/loved.png" alt="">';
+                if($totalReacts<10){
+                    echo '<span class="loved">0'.$totalReacts . '<br>loved!</span>';
+                }else{
+                    echo '<span class="loved">'.$totalReacts . '<br>loved!</span>';
+                }
+            }else{
+                    echo '<img src="assets/images/love.png" alt="">';
+                    echo '<span class="loved">Love<br> it?</span>';
+                }
+            ?>
+            
+        </div>
+        <div class="count-game"></div>
         <div class="wrapper clearfix">
             <div class="add-ballons"></div>
             <div class="gamespoints"><strong>Game Over:</strong> <?php echo $points ?></div>
