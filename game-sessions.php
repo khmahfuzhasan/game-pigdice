@@ -1,13 +1,14 @@
 <?php 
 
+session_start();
 if(isset($_POST['firstPlayer']) && isset($_POST['secondPlayer']) && isset($_POST['gameScores'])){
-	session_start();
 	if(empty($_POST['firstPlayer']) && empty($_POST['secondPlayer']) && empty($_POST['gameScores'])){
 		$_SESSION['player_one'] = "Player 1";
 		$_SESSION['player_two'] = "Player 2";
 		$_SESSION['points'] = 50;
 		echo json_encode(["player_one"=>$_SESSION['player_one'],"player_two"=>$_SESSION['player_two'],"points"=>$_SESSION['points'],'status'=>true,'isEmpty'=>true]);
 	}else{
+		
 		if(!empty($_POST['firstPlayer'])){
 		$_SESSION['player_one'] =$_POST['firstPlayer'];
 			$isFirstEmpty = false;
@@ -32,7 +33,13 @@ if(isset($_POST['firstPlayer']) && isset($_POST['secondPlayer']) && isset($_POST
 			$_SESSION['points'] =$_POST['gameScores'];
 		}
 
-		echo json_encode(["player_one"=>$_SESSION['player_one'],"player_two"=>$_SESSION['player_two'],"points"=>$_SESSION['points'],'status'=>true,'isFirstEmpty'=>$isFirstEmpty,'isSecondEmpty'=>$isSecondEmpty,'isSecondLess'=>$isSecondLess]);
+		$_SESSION['winning-score-0']=0;
+		$_SESSION['winning-score-1']=0;
+		
+		echo json_encode(["player_one"=>$_SESSION['player_one'],"player_two"=>$_SESSION['player_two'],"points"=>$_SESSION['points'],'status'=>true,'isFirstEmpty'=>$isFirstEmpty,'PlayersScore'=>[0,0],'isSecondEmpty'=>$isSecondEmpty,'isSecondLess'=>$isSecondLess]);
 	}
 
+}else{
+	//header('location: http://localhost/learnjs/pigdice/');
+	echo 'silence is golden!';
 }

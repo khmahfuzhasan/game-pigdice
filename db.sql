@@ -6,7 +6,6 @@ CREATE TABLE reaction(
     react varchar(255) NOT NULL,
     reactDate DATETIME NOT NULL DEFAULT NOW()
 );
-drop TABLE played;
 CREATE TABLE played(
 	id int(255) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     playerOne VARCHAR(255) NOT NULL,

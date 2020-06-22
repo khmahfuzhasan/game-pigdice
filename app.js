@@ -1,83 +1,14 @@
-let score, roundScore, activePlayer,sameDice,diceCount,gamePlaying,setPoints;
-
-
-let diceDOM 	= document.querySelector('.dice');
-let btnRollDOM 	= document.querySelector('.btn-roll');
-let btnHoldDOM 	= document.querySelector('.btn-hold');
-let btnNewDOM 	= document.querySelector('.btn-new');
-let blurEffect 		= document.querySelector('.blurEffect');
-let settingInputs 	= document.querySelector('.setting-inputs');
-let countReaction 	= document.querySelector('.count-reaction');
-//settings info
-let firstPlayer	= document.querySelector('#firstPlayer');
-let secondPlayer= document.querySelector('#secondPlayer');
-let btnSettings	= document.querySelector('.btn-settings');
-let settingUpdate= document.querySelector('#settingUpdate');
-let gameScores= document.querySelector('#gameScores');
-let addBallons= document.querySelector('.add-ballons');
-let countGame= document.querySelector('.count-game');
-    setPoints = gameScores.value.trim();
-
-//Audio Select
-
-let startGame = document.getElementById('startGame');
-let rollDice = document.getElementById('rollDice');
-let globalPoint = document.getElementById('globalPoint');
-let lostPoint = document.getElementById('lostPoint');
-let countGameAudio = document.getElementById('countGameAudio');
-let winner = document.getElementById('winner');
-
 // initalization game
 init();
 
-// function audios
-
-function startGameDice(){
-	startGame.src='assets/audio/start-game.mp3';
-	startGame.play();
-}
-function rollingDice(){
-	rollDice.src='assets/audio/roll-dice-spin.mp3';
-	rollDice.play();
-}
-
-function globalPointDice(){
-	globalPoint.src='assets/audio/global-point.mp3';
-	globalPoint.play();
-}
-function lostPointDice(){
-	lostPoint.src='assets/audio/lost-hand.mp3';
-	lostPoint.play();
-}
-
-function winnerDice(){
-	winner.src='assets/audio/winner-2.mp3';
-	setTimeout(()=>{
-		winner.play();
-	},150);
-}
-function countTotalGameAudio(){
-	countGameAudio.src='assets/audio/kiss-me-close-you.mp3';
-	countGameAudio.play();
-}
-
-function initAudio(){
-	rollDice.src='assets/audio/initialize.mp3';
-	globalPoint.src='assets/audio/initialize.mp3';
-	lostPoint.src='assets/audio/initialize.mp3';
-	countGameAudio.src='assets/audio/initialize.mp3';
-	winner.src='assets/audio/initialize.mp3';
-}
-//Event Listener Of Count Game
-countGame.addEventListener('click',()=>{
-	countTotalGameAudio();
-});
 
 
 //Event handler for btn-roll
 btnRollDOM.addEventListener('click',()=>{
 
 	if(gamePlaying){
+			//each click roll dice button wait 1second
+			disabledBtn(850);
 			rollingDice();
 			btnHoldDOM.removeAttribute('disabled');
 			btnHoldDOM.style.opacity=1;
@@ -149,8 +80,9 @@ btnHoldDOM.addEventListener('click',()=>{
 
 			//2. Update UI
 
-			//3. check if the player won the game
+			//3. check if the player won the game setPoints
 			if(score[activePlayer] >=setPoints){
+				winnerID = activePlayer;
 				winnerDice();
 				diceDOM.setAttribute('src','assets/images/end-game.png');
 				diceDOM.style.border 	= '3px solid rgba(111, 206, 112, 0.74)';
@@ -169,41 +101,42 @@ btnHoldDOM.addEventListener('click',()=>{
 
 			}
 	}// close gamePlaying
-
-
-
-});
+}); 
 
 //Event Listener for btn-new
 btnNewDOM.addEventListener('click',newGameStart);
 
-function newGameStart(){
-	init();
-	if(gamePlaying){
-		startGameDice();
-		diceDOM.style.display 	='block';
-		diceDOM.classList.add('animation');
-		btnRollDOM.setAttribute('disabled','disabled');
-		btnRollDOM.style.opacity=0.5;
-		btnHoldDOM.setAttribute('disabled', 'disabled');
-		btnHoldDOM.style.opacity=0.5;
-		diceDOM.setAttribute('src','assets/images/start-game.png');
-		setTimeout(()=>{
-			diceDOM.style.display 	='none';
-			diceDOM.classList.remove('animation');
-			btnRollDOM.removeAttribute('disabled','disabled');
-			btnRollDOM.style.opacity=1;
-			btnHoldDOM.removeAttribute('disabled', 'disabled');
-			btnHoldDOM.style.opacity=1;
-		},1500);
-		document.querySelector('.player-0-panel').classList.add('active');
-		document.querySelector('.player-1-panel').classList.remove('active');
-
+	function newGameStart(){
+		init();
+		if(gamePlaying){
+			startGameDice();
+			diceDOM.style.display 	='block';
+			diceDOM.classList.add('animation');
+			disabledBtn(1500);
+			document.querySelector('.player-0-panel').classList.add('active');
+			document.querySelector('.player-1-panel').classList.remove('active');
 	}// close gamePlaying
 }
 
-// Next Player function
+// function roll dice and hold button disabled for 1second
 
+function disabledBtn(time){
+			btnRollDOM.setAttribute('disabled','disabled');
+			btnRollDOM.style.opacity=0.5;
+			btnHoldDOM.setAttribute('disabled', 'disabled');
+			btnHoldDOM.style.opacity=0.5;
+			diceDOM.setAttribute('src','assets/images/start-game.png');
+			setTimeout(()=>{
+				diceDOM.style.display 	='none';
+				diceDOM.classList.remove('animation');
+				btnRollDOM.removeAttribute('disabled','disabled');
+				btnRollDOM.style.opacity=1;
+				btnHoldDOM.removeAttribute('disabled', 'disabled');
+				btnHoldDOM.style.opacity=1;
+			},time);
+}
+
+// Next Player function
 function nextPlayer(){
 	roundScore=0;
 	document.getElementById('current-'+activePlayer).textContent=roundScore;
@@ -226,7 +159,6 @@ function nextPlayer(){
 }
 
 // spinning dice
-
 function spinningDice(){
 	diceDOM.classList.add('spinning');
 	let dice 		= Math.floor(Math.random()*5)+2;
@@ -238,251 +170,3 @@ function spinningDice(){
 		},100);
 	}
 }
-
-
-
-
-// settings popup
-btnSettings.addEventListener('click',settingspoUp);
-function settingspoUp(){
-	blurEffect.classList.toggle('popup');
-	settingInputs.classList.toggle('popup');
-	btnSettings.classList.toggle('popover');	
-}
-
-settingUpdate.addEventListener('click',(event)=>{
-	event.preventDefault();
-	let valueOfFirst 	= firstPlayer.value.trim();
-	let valueOfSecond 	= secondPlayer.value.trim();
-	let valueOfPoints 	= gameScores.value.trim();
-	let player0	= document.querySelector('#name-0');
-	let player1	= document.querySelector('#name-1');
-	let updateGamePoints	= document.querySelector('.gamespoints');
-
-		jQuery.ajax({
-		url: 'game-sessions.php',
-		type:'POST',
-		data:{'firstPlayer':valueOfFirst,'secondPlayer':valueOfSecond,'gameScores':valueOfPoints},
-		success:(response)=>{
-			const res = JSON.parse(response);
-			if(res.status){
-				player0.textContent = firstPlayer.value = res.player_one;
-				player1.textContent = secondPlayer.value = res.player_two;
-				setPoints  = gameScores.value = res.points;
-				updateGamePoints.innerHTML = `<strong>Game Over:</strong> ${res.points}`;
-				if(!res.isEmpty && !res.isFirstEmpty && !res.isSecondEmpty && !res.isSecondLess){
-					settingspoUp();
-					newGameStart();
-				}else if(res.isFirstEmpty){
-					borderWarn(firstPlayer,'red');
-					borderWarn(secondPlayer,'#000');
-					borderWarn(gameScores,'#000');
-				}else if(res.isSecondEmpty){
-					borderWarn(firstPlayer,'#000');
-					borderWarn(secondPlayer,'red');
-					borderWarn(gameScores,'#000');
-
-				}else if(res.settingspoUp){
-					borderWarn(firstPlayer,'#000');
-					borderWarn(secondPlayer,'#000');
-					borderWarn(gameScores,'red');				
-				}else{
-					borderWarn(firstPlayer,'#000');
-					borderWarn(secondPlayer,'#000');
-					borderWarn(gameScores,'red');
-				}
-				//console.log(res);
-			}
-		}
-	});
-});
-
-// Alert Messages
-function borderWarn(inpput,color){
-	inpput.style.border=`1px solid ${color}`;
-}
-
-// create ballons
-function createNewBallons(number,size){
-	let x ="";
-	for(let i=0;i<number;i++ ){
-	let fromLeft 		= Math.floor(Math.random()* 1000)+1;
-	let imageNum		= Math.floor(Math.random()*3)+1;
-	let animSpeed		= Math.random()*3+1;
-	let imagesize		= Math.floor(Math.random()*size)+1;
-		x += `<img class="winnerBallons" style="width:${imagesize}px;left:${fromLeft}px;animation: fallDown ${animSpeed}s infinite;" src="assets/images/ballon-${imageNum}.png">`;
-	}
-	 return x;
-}
-
-// winnerBallon poup
-function winnerBallons(){
-	if(gamePlaying){
-		addBallons.innerHTML = createNewBallons(100,200);
-		setTimeout(()=>{
-			addBallons.innerHTML = "";
-		},19000);	
-	}
-}
-//winnerBallons();
-
-
-// create New Emoji
-function createNewEmoji(title,number,size){
-	let x ="";
-	for(let i=0;i<number;i++ ){
-	let fromLeft 		= Math.floor(Math.random()* 900)+1;
-	let imageNum		= Math.floor(Math.random()*5)+1;
-	let animSpeed		= 1.2;
-		x += `<img class="winnerBallons" style="width:${size}px;left:${fromLeft}px;animation: rollUpDown ${animSpeed}s infinite;" src="assets/images/${title}-${imageNum}.png">`;
-	}
-	 return x;
-}
-
-
-// roll Dice Emoji
-function rollDiceEmoji(){
-	if(gamePlaying){
-		addBallons.innerHTML = createNewEmoji('roll',1,100);
-		if(score[0] < setPoints || score[1] < setPoints ){
-			setTimeout(()=>{
-				addBallons.innerHTML = "";
-			},1200);	
-		}
-	}
-}
-//rollDiceEmoji();
-// roll Dice Emoji when failed
-function rollDiceFailedmoji(){
-	if(gamePlaying){
-		addBallons.innerHTML = createNewEmoji('failed',1,100);
-		if(score[0] < setPoints || score[1] < setPoints ){
-			setTimeout(()=>{
-				addBallons.innerHTML = "";
-			},1200);	
-		}
-	}
-}
-
-//initialize the application
-function init(){
-	initAudio();
-	addBallons.innerHTML = "";
-	gamePlaying		= true;
-	score 			= [0,0];
-	roundScore 		= 0;
-	activePlayer 	= 0;
-	sameDice 		= 0;
-	diceCount 		=1;
-	document.getElementById('score-0').textContent 	=0;
-	document.getElementById('score-1').textContent 	=0;
-	document.getElementById('current-0').textContent=0;
-	document.getElementById('current-1').textContent=0;
-	document.getElementById('update-0').textContent = "";
-	document.getElementById('update-1').textContent = "";
-	document.getElementById('name-0').classList.remove('activePoint');
-	document.getElementById('name-1').classList.remove('activePoint');
-}
-
-
-// Count  Reactions and Update
-
-// GET Reacts
-function getReact(){
-	jQuery.ajax({
-		url: 'get-react.php',
-		type: 'POST',
-		data:{
-			'active':true
-		},
-		success:(res)=>{
-			const response = JSON.parse(res);
-			if(response.status){
-				//console.log(response);
-				if(response.session){
-					if(response.reactCount<10){
-						countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
-					}else{
-						countReaction.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
-					}	
-				}else{
-					if(response.reactCount<10){
-						countReaction.innerHTML = `<img src="assets/images/love.png" alt=""><span class="loved">0${response.data}<br>loved!</span>`;
-					}else{
-						countReaction.innerHTML = `<img src="assets/images/love.png" alt=""><span class="loved">${response.data}<br>loved!</span>`;				
-					}					
-				}
-			}
-		}
-	});
-
-}
-	
-
-
-// SET Reacts
-countReaction.addEventListener('click',setReact);
-
-// setReact
-function setReact(){
-	jQuery.ajax({
-		url: 'set-react.php',
-		type: 'POST',
-		data:{'active':true},
-		success:(res)=>{
-			const response = JSON.parse(res);
-			console.log(response);
-			if(response.status){
-				
-			}
-		}
-	});
-}
-
-
-// Count Total Played game
-function countTotalPlayed(){
-	player1 = firstPlayer.value.trim();
-	player2 = secondPlayer.value.trim();
-	pointsToltal = gameScores.value.trim();
-	jQuery.ajax({
-		url: 'set-total-game.php',
-		type: 'POST',
-		data:{
-			'active':true,
-			'player1':player1,
-			'player2':player2,
-			'pointsToltal':pointsToltal
-		},
-		success:(res)=>{
-			const response = JSON.parse(res);
-			if(response.status){
-				//console.log(response);
-			}
-		}
-	});
-}
-// Get Total Game Played Value
-function UpdateGamePlayed(){
-
-	jQuery.ajax({
-		url: 'get-total-game.php',
-		type: 'POST',
-		data:{
-			'active':true,
-		},
-		success:(res)=>{
-			const response = JSON.parse(res);
-			if(response.status){
-				countGame.innerHTML=`<img src="assets/images/loved.png" alt=""><span class="loved">${response.data}<br>Played!</span>`;
-			}
-		}
-	});
-}
-
-
-// Set Interval
-setInterval(()=>{
-	getReact();
-	UpdateGamePlayed();
-},500);
