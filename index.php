@@ -3,7 +3,7 @@
 
 <div class="count-reaction"></div>
 <div class="count-game"></div>
-<div class="count-lavel"><img src="assets/images/loved.png" alt=""><span class="lavel lavel-<?php echo $lavel; ?>"><?php echo $lavel; ?><br>Lavel!</span>
+<div class="count-lavel"><img src="assets/images/loved.png" alt=""><img id="pin" src="assets/images/pin.png" alt=""><span class="lavel lavel-<?php echo $lavel; ?>"><?php echo $lavel; ?><br>Lavel!</span>
 </div>
     <div class="game-role"></div>
 <div class="wrapper clearfix">

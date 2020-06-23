@@ -490,7 +490,18 @@ button i{
     top: 300px;
 }
 
-
+.count-lavel img#pin {
+    width: 25px;
+    position: absolute;
+    top: 4px;
+    right: 66px;
+    transform: rotate(-34deg);
+    opacity: 0.5;
+    z-index: 999999999;
+}
+.count-lavel:hover img#pin{
+    opacity: 1;
+}
 
 .game-role {
     width: 1000px;
