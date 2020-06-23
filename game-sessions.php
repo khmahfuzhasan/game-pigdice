@@ -1,7 +1,8 @@
 <?php 
 
 session_start();
-if(isset($_POST['firstPlayer']) && isset($_POST['secondPlayer']) && isset($_POST['gameScores'])){
+if(isset($_POST['firstPlayer']) && isset($_POST['secondPlayer']) && isset($_POST['gameScores']) && isset($_POST['settinglavelVal'])){
+	$lavel = $_SESSION['lavel'] = $_POST['settinglavelVal'];
 	if(empty($_POST['firstPlayer']) && empty($_POST['secondPlayer']) && empty($_POST['gameScores'])){
 		$_SESSION['player_one'] = "Player 1";
 		$_SESSION['player_two'] = "Player 2";
@@ -36,7 +37,7 @@ if(isset($_POST['firstPlayer']) && isset($_POST['secondPlayer']) && isset($_POST
 		$_SESSION['winning-score-0']=0;
 		$_SESSION['winning-score-1']=0;
 		
-		echo json_encode(["player_one"=>$_SESSION['player_one'],"player_two"=>$_SESSION['player_two'],"points"=>$_SESSION['points'],'status'=>true,'isFirstEmpty'=>$isFirstEmpty,'PlayersScore'=>[0,0],'isSecondEmpty'=>$isSecondEmpty,'isSecondLess'=>$isSecondLess]);
+		echo json_encode(["player_one"=>$_SESSION['player_one'],"player_two"=>$_SESSION['player_two'],"points"=>$_SESSION['points'],'status'=>true,'isFirstEmpty'=>$isFirstEmpty,'PlayersScore'=>[0,0],'isSecondEmpty'=>$isSecondEmpty,'isSecondLess'=>$isSecondLess,'lavel'=>$lavel]);
 	}
 
 }else{

@@ -7,6 +7,7 @@
         <script src="assets/js/settings.js"></script>
         <script src="assets/js/react.js"></script>
         <script src="assets/js/total-game.js"></script>
+        <script src="assets/js/lavel.js"></script>
         <script src="app.js"></script>
     </body>
 </html>

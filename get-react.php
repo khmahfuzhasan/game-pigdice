@@ -16,6 +16,7 @@ if(isset($_POST['active'])){
 					echo json_encode(["status"=>true,'data'=>$totalRow,'session'=>false, "message"=> "get data successfully"]);
 				}
 			}else{
+			
 				echo json_encode(["status"=>true,'data'=>$totalRow,'session'=>false, "message"=> "get data successfully"]);
 			}
 			

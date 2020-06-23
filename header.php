@@ -1,6 +1,5 @@
 <?php 
 session_start();
-//session_destroy();
 // Player one
 if(isset($_SESSION['player_one'])){
     $Player_one = $_SESSION['player_one'];
@@ -28,7 +27,12 @@ if(isset($_SESSION['isReact'])){
 }else{
     $isReact = false;
 }
-
+// Lavel
+if(isset($_SESSION['lavel'])){
+    $lavel =$_SESSION['lavel'];
+}else{
+    $lavel = 'standard'; 
+}
 
 //winning score for player 0
 if(isset($_SESSION['winning-score-0'])){

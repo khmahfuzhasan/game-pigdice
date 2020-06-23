@@ -48,6 +48,8 @@ function setReact(){
 				const response = JSON.parse(res);
 				if(response.status){
 					countReaction.classList.add('Has_loved');
+				}else{
+					countReaction.classList.remove('Has_loved');
 				}
 			}
 		});
@@ -69,4 +71,4 @@ function setReact(){
 // Set Interval
 setInterval(()=>{
 	getReact();
-},500);
+},1500);

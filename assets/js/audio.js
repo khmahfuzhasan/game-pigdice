@@ -18,6 +18,8 @@ function lostPointDice(){
 }
 
 function winnerDice(){
+	rollDice.src='assets/audio/initialize.mp3';
+	countGameAudio.src='assets/audio/initialize.mp3';
 	winner.src='assets/audio/winner-2.mp3';
 	setTimeout(()=>{
 		winner.play();

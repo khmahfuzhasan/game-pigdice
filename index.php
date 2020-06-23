@@ -3,9 +3,12 @@
 
 <div class="count-reaction"></div>
 <div class="count-game"></div>
+<div class="count-lavel"><img src="assets/images/loved.png" alt=""><span class="lavel lavel-<?php echo $lavel; ?>"><?php echo $lavel; ?><br>Lavel!</span>
+</div>
 <div class="wrapper clearfix">
     <div class="add-ballons"></div>
-    <div class="gamespoints"><strong>Game Over:</strong> <?php echo $points ?></div>
+    <div class="gamespoints"><strong>Winning Score:</strong> <?php echo $points; ?></div>
+    <div class="session-destroy"><a href="session-destroy.php">Reset</a></div>
     <div class="game-settings"> 
         <button class="btn-settings"><img src="assets/images/settings-outline.svg" alt=""></button>
         <div class="blurEffect"></div>
@@ -17,6 +20,15 @@
                 <input id="secondPlayer" type="text" value="<?php echo $Player_two; ?>">
                 <label for="gameScores">Game Points</label>
                 <input id="gameScores" type="number" value="<?php echo $points; ?>" min='50' title="Minimum Points 50">
+                <label for="settinglavel">Select Lavel</label>
+                <select name="lavel" id="settinglavel">
+                    <option value="standard">Standard</option>
+                    <?php if($lavel === 'standard'){
+                        echo '<option value="hard" >Hard</option>';
+                    }else{
+                        echo '<option value="hard" selected="selected">Hard</option>';
+                    } ?>
+                </select>
                 <input id="settingUpdate" type="submit" value="Submit">
             </form>
         </div>
@@ -48,7 +60,8 @@
     <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
     <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
     
-    <img src="assets/images/new-game.png" alt="Dice" class="dice">
+    <img id="dice1" src="assets/images/new-game.png" alt="Dice" class="dice">
+    <img id="dice2" src="assets/images/new-game.png" alt="Dice-2" class="dice">
 </div>
         
 <?php require_once('footer.php') ?>

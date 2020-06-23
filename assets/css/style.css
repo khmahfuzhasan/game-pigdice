@@ -424,7 +424,35 @@ button i{
     text-shadow: 0 0px 3px #4a3232b5;
     text-align: center;
 }
+/*Count Lavel*/
+.count-lavel{
+    display:block;
+    width:100px;
+    position: absolute;
+    right:20px;
+    top:208px;
+    z-index: 99999;
+    cursor: pointer;
 
+}
+.count-lavel:hover{
+    opacity: .9;
+}
+.count-lavel img{
+    width:100px;
+}
+.count-lavel .lavel {
+    position: absolute;
+    right: 0px;
+    top: 22px;
+    left: 0;
+    font-size: 12px;
+    color: #ddd;
+    font-weight: bold;
+    text-shadow: 0 0px 3px #4a3232b5;
+    text-align: center;
+    text-transform: capitalize;
+}
  .winning-score{
     position: absolute;
     top: 10px;
@@ -441,4 +469,14 @@ button i{
     color: #fff;
     font-weight: bold;
     line-height: 26px;
+}
+#settinglavel{
+    padding: 5px;
+    margin-left: 20px;
+    width: 167px;
+    font-size: 18px;
+}
+
+#dice2.dice{
+    top: 300px;
 }

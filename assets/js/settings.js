@@ -13,6 +13,7 @@ settingUpdate.addEventListener('click',(event)=>{
 	let valueOfPoints 	= gameScores.value.trim();
 	let player0	= document.querySelector('#name-0');
 	let player1	= document.querySelector('#name-1');
+	let settinglavelVal = settinglavel.value.trim();
 	let updateGamePoints	= document.querySelector('.gamespoints');
 		alert('New setup will be affected all the current scores! Press \'Ok\' to confirm!');
 		jQuery.ajax({
@@ -22,10 +23,21 @@ settingUpdate.addEventListener('click',(event)=>{
 			'firstPlayer':valueOfFirst,
 			'secondPlayer':valueOfSecond,
 			'gameScores':valueOfPoints,
+			'settinglavelVal':settinglavelVal
 		},	
 		success:(response)=>{
 			const res = JSON.parse(response);
+			
 			if(res.status){
+				lavel = res.lavel;
+				countLavel.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="lavel lavel-${res.lavel}">${res.lavel}<br>Lavel!</span>`;
+					if(res.lavel =='standard'){
+						diceDOM2.style.display='none';
+						settinglavel.innerHTML = '<option value="standard" selected="selected">Standard</option><option value="hard">Hard</option>';
+					}else{
+						diceDOM2.style.display='block';
+						settinglavel.innerHTML = '<option value="standard">Standard</option><option value="hard" selected="selected">Hard</option>';
+					}
 				player0.textContent = firstPlayer.value = res.player_one;
 				player1.textContent = secondPlayer.value = res.player_two;
 				setPoints  = gameScores.value = res.points;
