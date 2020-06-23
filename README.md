@@ -10,3 +10,6 @@ Pig is a simple dice game which in its basic form is playable with just a single
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
+
+#Live Demo
+<a href="https://showrav.com/pigdice/">https://showrav.com/pigdice/</a>

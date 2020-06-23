@@ -2,8 +2,6 @@
 function borderWarn(inpput,color){
 	inpput.style.border=`1px solid ${color}`;
 }
-
-console.log(countLavel);
 countLavel.addEventListener('click',function(){
 	if(lavel==='standard'){
 		gameRole.classList.toggle('clicked');
