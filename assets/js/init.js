@@ -7,21 +7,22 @@ let btnNewDOM 	= document.querySelector('.btn-new');
 let blurEffect 		= document.querySelector('.blurEffect');
 let settingInputs 	= document.querySelector('.setting-inputs');
 let countReaction 	= document.querySelector('.count-reaction');
-let countLavel 	= document.querySelector('.count-lavel');
 let winningScore0 	= document.querySelector('#player-0-winning-score');
 let winningScore1 	= document.querySelector('#player-1-winning-score');
+let countLavel 		= document.querySelector('.count-lavel');
+let gameRole 		= document.querySelector('.game-role');
 //settings info
-let firstPlayer	= document.querySelector('#firstPlayer');
-let secondPlayer= document.querySelector('#secondPlayer');
-let btnSettings	= document.querySelector('.btn-settings');
-let settingUpdate= document.querySelector('#settingUpdate');
-let gameScores= document.querySelector('#gameScores');
-let addBallons= document.querySelector('.add-ballons');
-let countGame= document.querySelector('.count-game');
-let settinglavel= document.querySelector('#settinglavel');
-	lavel= settinglavel.value.trim();
-    setPoints = gameScores.value.trim();
-    setPoints = 100;
+let firstPlayer		= document.querySelector('#firstPlayer');
+let secondPlayer	= document.querySelector('#secondPlayer');
+let btnSettings		= document.querySelector('.btn-settings');
+let settingUpdate	= document.querySelector('#settingUpdate');
+let gameScores		= document.querySelector('#gameScores');
+let addBallons 		= document.querySelector('.add-ballons');
+let countGame 		= document.querySelector('.count-game');
+let settinglavel 	= document.querySelector('#settinglavel');
+	lavel 		= settinglavel.value.trim();
+    setPoints 	= gameScores.value.trim();
+    setPoints 	= 100;
 	if(lavel ==='standard'){
 		diceDOM2.style.display='none';
 	}else{

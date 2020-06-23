@@ -9,6 +9,14 @@
     
 }
 
+
+@font-face {
+  src: url(../fonts/AcornSwash-Regular.ttf);
+  font-family: pig-dice;
+  font-style: normal;
+  font-weight: 400;
+
+}
 .clearfix::after {
     content: "";
     display: table;
@@ -435,6 +443,7 @@ button i{
     cursor: pointer;
 
 }
+
 .count-lavel:hover{
     opacity: .9;
 }
@@ -479,4 +488,35 @@ button i{
 
 #dice2.dice{
     top: 300px;
+}
+
+
+
+.game-role {
+    width: 1000px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 999;
+    padding: 34px;
+    font-size: 31px;
+     font-family: pig-dice;
+    display: none;
+}
+.game-role  p{
+    margin-bottom: 25px;
+}
+.game-role ul li {
+    list-style: disclosure-closed;
+    margin-left: 12px;
+    margin-bottom: 20px;
+
+}
+
+.game-role.clicked{
+    display:block;
 }
