@@ -9,7 +9,6 @@
 <div class="wrapper clearfix">
     <div class="add-ballons"></div>
     <div class="gamespoints"><strong>Winning Score:</strong> <?php echo $points; ?></div>
-    <div class="session-destroy"><a href="session-destroy.php">Reset</a></div>
     <div class="game-settings"> 
         <button class="btn-settings"><img src="assets/images/settings-outline.svg" alt=""></button>
         <div class="blurEffect"></div>
