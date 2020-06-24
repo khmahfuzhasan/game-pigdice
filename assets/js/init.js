@@ -22,7 +22,6 @@ let countGame 		= document.querySelector('.count-game');
 let settinglavel 	= document.querySelector('#settinglavel');
 	lavel 		= settinglavel.value.trim();
     setPoints 	= gameScores.value.trim();
-    setPoints 	= 100;
 	if(lavel ==='standard'){
 		diceDOM2.style.display='none';
 	}else{
@@ -62,3 +61,18 @@ function init(){
 
 
 
+btnRollDOM.setAttribute('disabled','disabled');
+btnHoldDOM.setAttribute('disabled','disabled');
+btnNewDOM.setAttribute('disabled','disabled');
+btnRollDOM.style.opacity = '.5';
+btnHoldDOM.style.opacity = '.5';
+btnNewDOM.style.opacity = '.5';
+
+window.addEventListener('load', (event) => {
+  btnRollDOM.removeAttribute('disabled','disabled');
+	btnHoldDOM.removeAttribute('disabled','disabled');
+	btnNewDOM.removeAttribute('disabled','disabled');
+	btnRollDOM.style.opacity = '1';
+	btnHoldDOM.style.opacity = '1';
+	btnNewDOM.style.opacity = '1';
+});

@@ -8,15 +8,18 @@
     box-sizing: border-box;
     
 }
-
-
-@font-face {
-  src: url(../fonts/AcornSwash-Regular.ttf);
-  font-family: pig-dice;
-  font-style: normal;
-  font-weight: 400;
-
+::-moz-selection { /* Code for Firefox */
+  color: red;
+  background: #8383830a;
 }
+
+::selection {
+  background: #8383830a;
+}
+input::selection{
+    background:#38b84c;
+    color:#fff;
+} 
 .clearfix::after {
     content: "";
     display: table;
@@ -514,9 +517,14 @@ button i{
     overflow: hidden;
     z-index: 999;
     padding: 34px;
-    font-size: 31px;
-     font-family: pig-dice;
+    font-size: 22px;
+    font-family: 'Viaoda Libre', cursive;
     display: none;
+    font-weight: normal;
+}
+.game-role h1, .game-role h2,.game-role h3,.game-role h4,.game-role h5,.game-role h6{
+    font-family: 'Viaoda Libre', cursive;
+
 }
 .game-role  p{
     margin-bottom: 25px;
@@ -530,4 +538,16 @@ button i{
 
 .game-role.clicked{
     display:block;
+}
+
+.load-images{
+    position: absolute;
+    top:0;
+    opacity: 0;
+    display: none;
+}
+
+.load-images img{
+    opacity: 0;
+    display: none;
 }

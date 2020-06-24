@@ -3,7 +3,12 @@ btnSettings.addEventListener('click',settingspoUp);
 function settingspoUp(){
 	blurEffect.classList.toggle('popup');
 	settingInputs.classList.toggle('popup');
-	btnSettings.classList.toggle('popover');	
+	btnSettings.classList.toggle('popover');
+	if(!blurEffect.classList.contains('popup')){
+		btnSettings.innerHTML = `<img src="assets/images/settings.png" alt="">`;
+	}else{
+		btnSettings.innerHTML = `<img src="assets/images/close.png" alt="">`;
+	}
 }
 
 settingUpdate.addEventListener('click',(event)=>{
@@ -30,7 +35,7 @@ settingUpdate.addEventListener('click',(event)=>{
 			
 			if(res.status){
 				lavel = res.lavel;
-				countLavel.innerHTML = `<img src="assets/images/loved.png" alt=""><span class="lavel lavel-${res.lavel}">${res.lavel}<br>Lavel!</span>`;
+				countLavel.innerHTML = `<img src="assets/images/loved.png" alt=""><img id="pin" src="assets/images/pin.png" alt=""><span class="lavel lavel-${res.lavel}">${res.lavel}<br>Lavel!</span>`;
 					if(res.lavel =='standard'){
 						diceDOM2.style.display='none';
 						settinglavel.innerHTML = '<option value="standard" selected="selected">Standard</option><option value="hard">Hard</option>';

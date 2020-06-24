@@ -189,8 +189,8 @@ function disabledBtn(time){
 				}
 				btnRollDOM.removeAttribute('disabled','disabled');
 				btnRollDOM.style.opacity=1;
-				btnHoldDOM.removeAttribute('disabled', 'disabled');
-				btnHoldDOM.style.opacity=1;
+				//btnHoldDOM.removeAttribute('disabled', 'disabled');
+				//btnHoldDOM.style.opacity=1;
 			},time);
 }
 

@@ -56,7 +56,11 @@ if(isset($_SESSION['winning-score-1'])){
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
         <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css">
         <link type="text/css" rel="stylesheet" href="assets/css/style.css">
-        
-        <title>Pig Game</title>
+        <link rel="shortcut icon" type="image/x-icon" href="assets/images/loved.png">
+        <title>Pig Dice || Game</title>
+        <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet"> 
     </head>
 <body>
+
+
+   <div class="load-images"> <img src="assets/images/dice-1.png"><img src="assets/images/dice-2.png"><img src="assets/images/dice-3.png"><img src="assets/images/dice-4.png"><img src="assets/images/dice-5.png"><img src="assets/images/dice-6.png"></div>

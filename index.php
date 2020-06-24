@@ -10,7 +10,7 @@
     <div class="add-ballons"></div>
     <div class="gamespoints"><strong>Winning Score:</strong> <?php echo $points; ?></div>
     <div class="game-settings"> 
-        <button class="btn-settings"><img src="assets/images/settings-outline.svg" alt=""></button>
+        <button class="btn-settings"><img src="assets/images/settings.png" alt=""></button>
         <div class="blurEffect"></div>
         <div class="setting-inputs">
             <form>
